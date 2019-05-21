@@ -21,13 +21,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var targetPath string
+
 // initCmd represents the init command
 var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize a new go project",
 	Long:  `A longer description here`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := core.ParseTemplates("./templates"); err != nil {
+		if err := core.ParseTemplates(targetPath); err != nil {
 			fmt.Printf("%v\n", err)
 		}
 	},
@@ -35,7 +37,8 @@ var initCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(initCmd)
-
+	initCmd.Flags().StringVarP(&targetPath, "target", "t", "", "Target project directory to create")
+	initCmd.MarkFlagRequired("target")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
