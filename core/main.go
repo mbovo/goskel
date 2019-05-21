@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"text/template"
 
 	"github.com/gobuffalo/packd"
@@ -32,7 +33,11 @@ func ParseTemplates(destPath string) error {
 			t := template.New("test")
 			t, e = t.Parse(file.String())
 			if pass(e) {
-				pass(t.Execute(os.Stdout, nil))
+				var f *os.File
+				f, e = os.Open(filepath.Join(destPath, strings.Replace(file.Name(), ".tpl", "", 0)))
+				if pass(e) {
+					pass(t.Execute(f, nil))
+				}
 			}
 		}
 		return e
