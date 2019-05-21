@@ -42,7 +42,7 @@ func ParseTemplates(destPath string) error {
 
 			if pass(e) {
 				var f *os.File
-				f, e = os.Create(filepath.Join(destPath, strings.Replace(file.Name(), ".tpl", "", 0)))
+				f, e = os.Create(filepath.Join(destPath, strings.Replace(file.Name(), ".tpl", "", -1)))
 
 				if pass(e) {
 					pass(t.Execute(f, nil))

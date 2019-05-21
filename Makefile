@@ -6,7 +6,8 @@ clean:
 	go clean
 
 install: 
-	go install -v
+	packr build
+	packr install 
 
 test:
 	go test ./...
